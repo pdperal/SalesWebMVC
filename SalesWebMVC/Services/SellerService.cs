@@ -1,4 +1,5 @@
-﻿using SalesWebMVC.Data;
+﻿using Remotion.Linq.Clauses;
+using SalesWebMVC.Data;
 using SalesWebMVC.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace SalesWebMVC.Services
         }
         public void Insert(Seller seller)
         {
+            seller.Department = _context.Department.First();
             _context.Add(seller);
             _context.SaveChanges();
         }
