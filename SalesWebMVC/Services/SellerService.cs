@@ -1,4 +1,5 @@
-﻿using Remotion.Linq.Clauses;
+﻿using Microsoft.EntityFrameworkCore;
+using Remotion.Linq.Clauses;
 using SalesWebMVC.Data;
 using SalesWebMVC.Models;
 using System.Collections.Generic;
@@ -19,15 +20,19 @@ namespace SalesWebMVC.Services
         {
             return _context.Seller.ToList();
         }
+
         public void Insert(Seller seller)
         {
             _context.Add(seller);
             _context.SaveChanges();
         }
+
         public Seller FindById(int id)
         {
-            return _context.Seller.FirstOrDefault(seller => seller.Id == id);
+            return _context.Seller.Include(obj => obj.Department)
+                .FirstOrDefault(seller => seller.Id == id);
         }
+
         public void Remove(int id)
         {
             var obj = _context.Seller.Find(id);
