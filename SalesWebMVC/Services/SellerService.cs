@@ -2,7 +2,7 @@
 using SalesWebMVC.Data;
 using SalesWebMVC.Models;
 using System.Collections.Generic;
-using System.Linq;
+using System.Linq; 
 
 namespace SalesWebMVC.Services
 {
@@ -21,8 +21,18 @@ namespace SalesWebMVC.Services
         }
         public void Insert(Seller seller)
         {
-            seller.Department = _context.Department.First();
             _context.Add(seller);
+            _context.SaveChanges();
+        }
+        public Seller FindById(int id)
+        {
+            return _context.Seller.FirstOrDefault(seller => seller.Id == id);
+        }
+        public void Remove(int id)
+        {
+            var obj = _context.Seller.Find(id);
+            
+            _context.Seller.Remove(obj);
             _context.SaveChanges();
         }
     }
